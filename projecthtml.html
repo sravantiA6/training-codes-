@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LuxeStays</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family:'Courier New', Courier, monospace; 
+    }
+    .body{
+     color: rgba(0, 0, 0, 0.5);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background:linear-gradient(to right,black,grey);
+      padding: 1rem 1rem;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color:white;
+    }
+
+    .navbar nav a {
+      margin: 0 2rem;
+      text-decoration: none;
+      color: white;
+      font-weight: 200;
+    }
+
+    .navbar nav a:hover {
+  color:pink;
+}
+
+
+    .sign-in {
+      background-color:white;
+      color:black;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      }
+      .sign-in:hover {
+        background-color:pink;
+
+      }
+
+    .hero {
+      background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      margin-bottom: 0rem;
+      position: relative;
+    }
+
+    .overlay {
+      background-color:rgba(0, 0, 0, 0.5);
+      height: 100%;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .overlay h1 {
+
+      font-size: 2rem;
+      padding-bottom: 1rem;
+      color:white;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .overlay p {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color:white;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .search-box {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      /* background-color:rgba(0, 0, 0, 0.5); */
+      padding: 1rem;
+      border-radius: 5px;
+      max-width: 400px;
+      height:300px;
+      margin: auto; 
+    }
+
+    .search-box input, .search-box  {
+      padding: 0.2rem;
+      border-radius:1px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .search-box input {
+      width: 138px;
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    .search-btn {
+      background-color:white;
+      color:black;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius:2rem;
+      padding:0.5rem 0.5rem;
+}
+    .search-btn:hover {
+      transform: scale(1.03);
+
+        background-color:pink;
+
+    }
+    .heroine{
+      
+      height:100%;
+      background:linear-gradient(to right,white,grey); 
+      font-size: 2rem;
+      margin-top:0rem;
+      margin-bottom: 0rem;
+      text-align: center;
+
+    }
+    /* .overlay_1{
+      background:linear-gradient(to right,black,grey);
+    } */
+
+    .start{
+        margin-bottom:4rem;
+        font-family:'Times New Roman', Times, serif;
+    }
+    .card_1{
+        margin-left: 20px;
+        margin-right:20px;
+        overflow: hidden;
+        width:300px;
+        height:335px;
+        display:inline-block;
+        background-color:azure;
+        padding-bottom: 8px;
+        border-radius:30px;
+        box-shadow:4px 4px 15px 5px
+        rgba(0, 0, 0, 0.5);
+        
+    }
+    .card_1:hover{
+      transform: scale(1.03);
+    }
+    .card-img_1{
+        width:400px;
+        height:100px;
+    }
+    .card-title_1{
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
+
+    }
+    .card-text_1{
+        font-size:1rem;
+    }
+    .search-btn_1{
+        background-color:black;
+        color:white;
+        border-radius:150px;
+        width:100px;
+        height:40px;
+    }
+    .search-btn_1:hover{
+      transform: scale(1.03);
+        background-color:pink;
+    
+    }
+    .overlay_1{
+        background-color:white;
+
+    }
+    .villan{
+      margin-top:0rem; 
+      height:400px;
+      text-align: center;
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size:2rem;
+      background:linear-gradient(to right,white,grey);
+    
+    }
+    .end{
+       margin-top: 4rem; 
+      color:black;
+      font-size: 3rem;
+
+      font-family:'Times New Roman', Times, serif;
+    }
+  .sravs_1{
+        margin-top:4rem ;
+        margin-left: 10px;
+        margin-right:10px;
+        overflow: hidden;
+        width:300px;
+        height:200px;
+        display:inline-block;
+        background-color:aliceblue;
+        padding-bottom: 8px;
+        border-radius:50px;
+        box-shadow:4px 4px 15px 5px
+        rgba(0, 0, 0, 0.5);
+        font-size: 1.1rem;
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        border-radius: 20px;
+      
+    /* background:linear-gradient(to right black,grey);
+
+     */
+  }
+        
+
+
+
+  /* }
+  .ravs-title_1{
+    background:linear-gradient(to white,grey;
+
+    
+  } */
+
+ </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="logo">🏨LuxeStays</div>
+    <nav>
+      <a href="#">🏠Home</a>
+      <a href="#">🏨Hotels</a>
+      <a href="#">📞Contact</a>
+    </nav>
+    <button class="sign-in">Sign In</button>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay">
+      <h1>Discover India's Finest Stays</h1>
+      <p>Experience luxury, comfort, and authentic hospitality at the best hotels across Incredible India</p>
+
+      <div class="search-box">
+        <input type="text" placeholder="Destination :" />
+        <input type="text" placeholder="enter destination" />
+        <input type="text" placeholder="Check-in date" />
+        <input type="date" value="2025-07-10" />
+        <input type="text" placeholder="Check-out date" />
+        <input type="date" value="2025-07-11" />
+         <input type="text" placeholder="No.Of Guests" />
+        <input type="number" placeholder="👩‍💻 Guests" />
+        <button class="search-btn">Search Hotels</button>
+      </div>
+    </div>
+  </section>
+  <section class="heroine">
+    <!-- <div class="overlay_1"> -->
+    
+       <p class="start">POPULAR INDIAN DESTINATION</p>
+       <div class="card_1">
+        <img class="card-img_1" src="https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?cs=srgb&dl=pexels-thorsten-technoman-109353-338504.jpg&fm=jpg" alt="Card image cap">
+        <div class="card-body-1">
+          <h5 class="card-title_1">The Taj Mahal Palace</h5>
+          <h6>Mumbai,Maharastra</h6>
+  <p class="card-text_1">The hotel TAJ is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   <button class="search-btn_1">Book Now</button>
+  </div>
+  </div>
+  <div class="card_1">
+        <img class="card-img_1" src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/418251724.jpg?k=fecc2c0be8a4a721324dbb4eab08a9dc5f4d15fca6fa0c8267a27bc4316e3911&o=&hp=1" alt="Card image cap">
+        <div class="card-body-1">
+          <h5 class="card-title_1">Novotel</h5>
+          <h6>Vijaywada, AP</h6>
+  <p class="card-text_1">The hotel NOVOTEL is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   <button class="search-btn_1">Book Now</button>
+  </div>
+  </div>
+  <div class="card_1">
+        <img class="card-img_1" src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cmVzb3J0fGVufDB8fDB8fHww" alt="Card image cap">
+        <div class="card-body-1">
+          <h5 class="card-title_1">Taj Lake Palace</h5>
+          <h6>Hyderabad,TS</h6>
+  <p class="card-text_1">The hotel TAJ LAKE PALACE is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   <button class="search-btn_1">Book Now</button>
+  </div>
+  </div>
+
+  <div class="card_1">
+        <img class="card-img_1" src="https://pix10.agoda.net/hotelImages/124/1246280/1246280_16061017110043391702.jpg?ca=6&ce=1&s=414x232" alt="Card image cap">
+        <div class="card-body-1">
+          <h5 class="card-title_1">Taj Lake Palace</h5>
+          <h6>Hyderabad,TS</h6>
+  <p class="card-text_1">The hotel TAJ LAKE PALACE is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   <button class="search-btn_1">Book Now</button>
+  </div>
+  </div>
+
+  <div class="card_1">
+        <img class="card-img_1" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWlbvFyPssHnbVThr0EpS8cN76F46NhCyFtQ&s" alt="Card image cap">
+        <div class="card-body-1">
+          <h5 class="card-title_1">Taj Lake Palace</h5>
+          <h6>Hyderabad,TS</h6>
+  <p class="card-text_1">The hotel TAJ LAKE PALACE is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   <button class="search-btn_1">Book Now</button>
+  </div>
+  </div>
+</div>
+    </div>
+    <div>
+       <p class="end">What Our Guests Say</p></div>
+  </section>
+  <section class="villan">
+    <div class="overlay_2">
+      <!-- <div>
+       <p class="end">What Our Guests Say</p></div> -->
+      
+ <div class="sravs_1">
+
+        
+        <div class="sravs-body-1">
+          <h5 class="sravs-title_1">⭐⭐⭐⭐⭐</h5>
+  <p class="sravs-text_1">The hotel TAJ LAKE PALACE is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   
+  </div>
+  </div>
+
+        <div class="sravs_1">
+        
+        <div class="sravs-body-1">
+          <h5 class="sravs-title_1">⭐⭐⭐⭐</h5>
+  <p class="sravs-text_1">The hotel TAJ LAKE PALACE is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   
+  </div>
+  </div>
+
+   <div class="sravs_1">
+        
+        <div class="sravs-body-1">
+          <h5 class="sravs-title_1">⭐⭐⭐</h5>
+  <p class="sravs-text_1">The hotel TAJ LAKE PALACE is one of the most luxurious hotels in india with 5 star rating
+    we have world class facilities like different cuisine,room service etc. 
+  </p>
+   
+  </div>
+  </div>
+
+  </div>
+  </div>
+</body>
+</html>
