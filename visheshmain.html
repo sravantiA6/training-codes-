@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GetIt - Rent or Buy</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.6);
+            z-index: -1;
+            transition: background-image 0.5s ease-in-out;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+        }
+        .nav-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .tagline {
+            font-size: 20px;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+        /* Home cards */
+        .home-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .home-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .home-card:hover {
+            transform: scale(1.05);
+        }
+        .home-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .tagline{
+            font-family: 'Times New Roman', Times, serif;
+        }
+        /* Offer slider (small cards like Amazon) */
+        .slider {
+            margin-top: 40px;
+            overflow: hidden;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .slides {
+            display: flex;
+            gap: 15px;
+            animation: slide 20s infinite linear;
+        }
+        .slides img {
+            width: 200px; /* small card width */
+            height: 150px; /* small card height */
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        @keyframes slide {
+            0% { transform: translateX(0%); }
+            20% { transform: translateX(0%); }
+            25% { transform: translateX(-220px); }
+            40% { transform: translateX(-220px); }
+            45% { transform: translateX(-440px); }
+            60% { transform: translateX(-440px); }
+            65% { transform: translateX(-660px); }
+            80% { transform: translateX(-660px); }
+            85% { transform: translateX(-880px); }
+            100% { transform: translateX(-880px); }
+        }
+        /* Products grid */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .product-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .price {
+            margin: 8px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .btn {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #3498db;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        .btn-secondary {
+            background: #2ecc71;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            background: #27ae60;
+        }
+        .btn-like {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .btn-like:hover {
+            background: #c0392b;
+        }
+        .btn-cart {
+            background: #f39c12;
+            color: #fff;
+        }
+        .btn-cart:hover {
+            background: #d35400;
+        }
+        .btn-undo {
+            background: #9b59b6;
+            color: #fff;
+        }
+        .btn-undo:hover {
+            background: #8e44ad;
+        }
+        .btn-buy {
+            background: #3498db;
+            color: #fff;
+        }
+        .btn-buy:hover {
+            background: #2980b9;
+        }
+        .btn-rent {
+            background: #2ecc71;
+            color: #fff;
+        }
+        .btn-rent:hover {
+            background: #27ae60;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        #cart, #likes {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            width: 280px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+        #cart h2, #likes h2 {
+            margin-top: 0;
+            font-size: 18px;
+            text-align: center;
+        }
+        .cart-item, .like-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .cart-item img, .like-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .cart-item-details, .like-item-details {
+            flex: 1;
+            text-align: left;
+        }
+        .cart-total {
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
+        #loginPage {
+            display: none;
+            padding: 40px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            width: 300px;
+            margin: 100px auto;
+            text-align: center;
+            z-index: 1000;
+            position: relative;
+        }
+        #loginPage input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 6px;
+        }
+        .empty-message {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+        .toast-undo {
+            background: #9b59b6;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .toast-undo:hover {
+            background: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg" id="bg"></div>
+    <header>
+        <h1>GetIt</h1>
+        <nav>
+            <a onclick="showHome()">Home</a>
+            <a onclick="choosePerson('rent')">Rent</a>
+            <a onclick="choosePerson('buy')">Buy</a>
+            <a onclick="toggleLikes()">❤️ Liked <span id="likes-count" class="nav-badge">0</span></a>
+            <a onclick="toggleCart()">🛒 Cart <span id="cart-count" class="nav-badge">0</span></a>
+            <a onclick="showLogin()">Login</a>
+        </nav>
+    </header>
+    <div id="main-content" class="container"></div>
+    <div id="cart"></div>
+    <div id="likes"></div>
+    <div id="loginPage">
+        <h2>Login</h2>
+        <input type="text" placeholder="Username"><br>
+        <input type="password" placeholder="Password"><br>
+        <button class="btn btn-primary" onclick="hideLogin()">Login</button>
+    </div>
+    
+    <!-- Toast notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const backgrounds = {
+            home: "https://img.freepik.com/premium-photo/interior-brand-new-fashion-clothing-store_652667-137.jpg?w=2000",
+            men: "https://tse2.mm.bing.net/th/id/OIP.si3qIYSvIn-tufZX_UnnPAHaGZ?pid=Api&P=0&h=180",
+            women: "https://tse1.mm.bing.net/th/id/OIP.m1CfIyIkki8XqDYhH-aevwHaLH?pid=Api&P=0&h=180",
+            kids: "https://tse3.mm.bing.net/th/id/OIP.A1IqMTeyhKvTr6QzspO0dQHaE8?pid=Api&P=0&h=180",
+            men_formal: "https://tse2.mm.bing.net/th/id/OIP.si3qIYSvIn-tufZX_UnnPAHaGZ?pid=Api&P=0&h=180",
+            men_traditional: "https://tse2.mm.bing.net/th/id/OIP.si3qIYSvIn-tufZX_UnnPAHaGZ?pid=Api&P=0&h=180",
+            men_footwear: "https://tse2.mm.bing.net/th/id/OIP.si3qIYSvIn-tufZX_UnnPAHaGZ?pid=Api&P=0&h=180",
+            men_accessories: "https://tse2.mm.bing.net/th/id/OIP.si3qIYSvIn-tufZX_UnnPAHaGZ?pid=Api&P=0&h=180",
+            women_formal: "https://tse1.mm.bing.net/th/id/OIP.m1CfIyIkki8XqDYhH-aevwHaLH?pid=Api&P=0&h=180",
+            women_traditional:"https://tse1.mm.bing.net/th/id/OIP.m1CfIyIkki8XqDYhH-aevwHaLH?pid=Api&P=0&h=180",
+            women_footwear: "https://tse1.mm.bing.net/th/id/OIP.m1CfIyIkki8XqDYhH-aevwHaLH?pid=Api&P=0&h=180",
+            women_accessories: "https://tse1.mm.bing.net/th/id/OIP.m1CfIyIkki8XqDYhH-aevwHaLH?pid=Api&P=0&h=180",
+            kids_traditional: "https://tse3.mm.bing.net/th/id/OIP.A1IqMTeyhKvTr6QzspO0dQHaE8?pid=Api&P=0&h=180",
+            kids_footwear: "https://tse3.mm.bing.net/th/id/OIP.A1IqMTeyhKvTr6QzspO0dQHaE8?pid=Api&P=0&h=180",
+            kids_accessories: "https://tse3.mm.bing.net/th/id/OIP.A1IqMTeyhKvTr6QzspO0dQHaE8?pid=Api&P=0&h=180",
+            kids_nightdress: "https://tse3.mm.bing.net/th/id/OIP.A1IqMTeyhKvTr6QzspO0dQHaE8?pid=Api&P=0&h=180"
+        };
+
+        // Product database
+        const products = {
+            "Men": {
+                "Formal Office Wear": [
+                    { id: 1, name: "Men's Formal Suit", price: 89.99, rentPrice: 29.99, image: "https://tse1.mm.bing.net/th/id/OIP.gofRNwwjEwKwrRvyhbcCPgHaJQ?pid=Api&P=0&h=180" },
+                    { id: 2, name: "Business Shirt", price: 39.99, rentPrice: 12.99, image: "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?w=400" },
+                    { id: 3, name: "Formal Trousers", price: 49.99, rentPrice: 15.99, image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400" },
+                    { id: 4, name: "Blazer", price: 79.99, rentPrice: 24.99, image: "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=400" }
+                ],
+                "Traditional Dresses": [
+                    { id: 5, name: "Sherwani", price: 199.99, rentPrice: 59.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 6, name: "Kurta Pyjama", price: 59.99, rentPrice: 19.99, image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=400" },
+                    { id: 7, name: "Dhoti", price: 39.99, rentPrice: 12.99, image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400" }
+                ],
+                "Footwear": [
+                    { id: 8, name: "Formal Shoes", price: 89.99, rentPrice: 29.99, image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400" },
+                    { id: 9, name: "Casual Sneakers", price: 69.99, rentPrice: 22.99, image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400" },
+                    { id: 10, name: "Sports Shoes", price: 79.99, rentPrice: 25.99, image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400" }
+                ],
+                "Accessories": [
+                    { id: 11, name: "Leather Belt", price: 29.99, rentPrice: 9.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 12, name: "Tie Set", price: 24.99, rentPrice: 7.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 13, name: "Watch", price: 149.99, rentPrice: 39.99, image: "https://images.unsplash.com/photo-1523170335258-f5e6eed55d5a?w=400" }
+                ]
+            },
+            "Women": {
+                "Formal Office Wear": [
+                    { id: 14, name: "Women's Blazer", price: 79.99, rentPrice: 24.99, image: "http://natalet.com/images5/1220/formal-woman/formal-woman-40_4.png" },
+                    { id: 15, name: "Formal Dress", price: 69.99, rentPrice: 22.99, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400" },
+                    { id: 16, name: "Office Skirt", price: 49.99, rentPrice: 15.99, image: "https://m.media-amazon.com/images/I/61OioGUlmvL.jpg" }
+                ],
+                "Traditional Dresses": [
+                    { id: 17, name: "Saree", price: 89.99, rentPrice: 29.99, image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=400" },
+                    { id: 18, name: "Salwar Kameez", price: 59.99, rentPrice: 19.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 19, name: "Lehenga", price: 199.99, rentPrice: 59.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" }
+                ],
+                "Footwear": [
+                    { id: 20, name: "Heels", price: 69.99, rentPrice: 22.99, image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400" },
+                    { id: 21, name: "Flats", price: 49.99, rentPrice: 15.99, image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400" },
+                    { id: 22, name: "Sandals", price: 39.99, rentPrice: 12.99, image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400" }
+                ],
+                "Accessories": [
+                    { id: 23, name: "Handbag", price: 89.99, rentPrice: 29.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 24, name: "Jewelry Set", price: 59.99, rentPrice: 19.99, image: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400" },
+                    { id: 25, name: "Scarf", price: 19.99, rentPrice: 6.99, image: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=400" }
+                ]
+            },
+            "Kids": {
+                "Traditional Dresses": [
+                    { id: 26, name: "Kids Kurta", price: 29.99, rentPrice: 9.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 27, name: "Kids Lehenga", price: 49.99, rentPrice: 15.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" }
+                ],
+                "Footwear": [
+                    { id: 28, name: "Kids Shoes", price: 39.99, rentPrice: 12.99, image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400" },
+                    { id: 29, name: "Kids Sandals", price: 24.99, rentPrice: 7.99, image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400" }
+                ],
+                "Accessories": [
+                    { id: 30, name: "Kids Cap", price: 14.99, rentPrice: 4.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 31, name: "Kids Bag", price: 19.99, rentPrice: 6.99, image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" }
+                ],
+                "Night Dresses": [
+                    { id: 32, name: "Kids Pajamas", price: 19.99, rentPrice: 6.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" },
+                    { id: 33, name: "Night Gown", price: 24.99, rentPrice: 7.99, image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400" }
+                ]
+            }
+        };
+
+        let cart = [];
+        let likes = [];
+        let lastAction = null; // To store the last action for undo functionality
+
+        function setBackground(key) {
+            if (backgrounds[key]) {
+                document.getElementById("bg").style.backgroundImage = `url(${backgrounds[key]})`;
+            }
+        }
+
+        function updateNavCounts() {
+            // Calculate total items in cart (sum of quantities)
+            const cartTotal = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartTotal;
+            
+            // Update likes count
+            document.getElementById('likes-count').textContent = likes.length;
+        }
+
+        // Toast notification function
+        function showToast(message, action, actionHandler) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = message;
+            
+            if (action && actionHandler) {
+                const undoBtn = document.createElement('button');
+                undoBtn.className = 'toast-undo';
+                undoBtn.textContent = action;
+                undoBtn.onclick = actionHandler;
+                toast.appendChild(undoBtn);
+            }
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function showHome() {
+            setBackground("home");
+            document.getElementById("main-content").innerHTML = `
+                <h2>Welcome to GetIt</h2>
+                <p class="tagline">India's first ever fastest fashion delivering app</p>
+                <div class="home-cards">
+                    <div class="home-card"><img src="http://buzz16.com/wp-content/uploads/2018/11/Formal-Dress-Combinations-For-Working-Women18.jpg"><p> female formal dresses</div>
+                    <div class="home-card"><img src="https://www.shauryasanadhya.com/cdn/shop/articles/one.jpg?v=1577337592"><p>female traditonal dresses</p></div>
+                    <div class="home-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR54eF3tnyiaS15l4Ryh1kR2iuj0NCmOXI2yw&s"><p>casual footwear women</p></div>
+                    <div class="home-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg7X9zvWyy_4rDjXVw5A4B_7G9TuJilCmJUw&s"><p>Shoes women</p></div>
+                    <div class="home-card"><img src="https://tse3.mm.bing.net/th/id/OIP.38tCruK5NZpchsy-0CyxVwHaHa?pid=Api&P=0&h=180"><p>formal footwear women</p></div>
+                    <div class="home-card"><img src="https://tse3.mm.bing.net/th/id/OIP.mqleH1pWV9k_8ezTFjsEtQHaHa?pid=Api&P=0&h=180"><p>accessories women</p></div>
+                    <div class="home-card"><img src="https://tse1.mm.bing.net/th/id/OIP.ck_a97x45Lq7sA89WXW_bAAAAA?pid=Api&P=0&h=180"><p>male formal dresses</p></div>
+                    <div class="home-card"><img src="https://tse2.mm.bing.net/th/id/OIP.hgAWrymwsHX7d-2RG9dc5gHaLH?pid=Api&P=0&h=180"><p>male tradtitional dresses</p></div>
+                    <div class="home-card"><img src="https://tse2.mm.bing.net/th/id/OIP.3r8qckOHIAimv0DzEHozKAHaEJ?pid=Api&P=0&h=180"><p>accessories men</p></div>
+                    <div class="home-card"><img src="https://cdn11.bigcommerce.com/s-pkla4xn3/images/stencil/2560w/products/26009/239562/black-designer-formal-oxford-shoes-for-men-wedding-shoes-leather-italy-pointed-toe-mens-dress-shoes__96259.1549627129.jpg?c=2"><p>formal footwear men</p></div>
+                    <div class="home-card"><img src="https://media.centrepointstores.com/i/centrepoint/FL05-02BLACK-FL05-02-SMMSM24240124_01-2100.jpg?fmt=auto&$quality-standard$&sm=c&$prodimg-m-prt-pdp-2x$"><p>casual footwear men </p></div>
+                    <div class="home-card"><img src="https://m.media-amazon.com/images/I/71WYOklf1FL._UY1000_.jpg"><p>Shoes men </p></div>
+                    <div class="home-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtW0E3itYQnQDbmonHfcbJ5Kvfi_Ke7QOG_w&s"><p>Watches</p></div>
+                    <div class="home-card"><img src="https://tse2.mm.bing.net/th/id/OIP.JD5wAZoyIMRswW1OrIPnRQHaLH?pid=Api&P=0&h=180"><p>kids wear boys </p></div>
+                    <div class="home-card"><img src="https://tse3.mm.bing.net/th/id/OIP.H77ANfXDgJfr8DN-CSWUPwHaHa?pid=Api&P=0&h=180"><p>kids wear girls </p></div>
+                </div>
+                <div class="slider">
+                    <div class="slides">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmw7KOpaEBL8q2TpXQYD22QKCYul7J6m8SHw&s" alt="Offer 1">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkcjPZP7hTLuCX_rsUBI88nGiBAeBqvvaaOw&s" alt="Offer 2">
+                        <img src="https://www.shutterstock.com/image-vector/mega-sale-template-advertising-promotion-260nw-1772271257.jpg" alt="Offer 3">
+                        <img src="https://www.shutterstock.com/image-vector/flat-product-sale-shoe-banner-260nw-291045251.jpg" alt="Offer 4">
+                        <img src="https://sylvi.in/cdn/shop/articles/Top_Offers_Discounts_on_Wrist_Watches_copy_1600x.jpg?v=1721280792" alt="Offer 5">
+                        <img src="https://www.shutterstock.com/image-vector/shopping-time-clock-last-minute-260nw-2055352352.jpg" alt="Offer 6">
+                        <img src="https://www.shutterstock.com/image-vector/last-minute-offer-watch-countdown-260nw-2647786293.jpg" alt="Offer 7">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo6ECekihjzxScNkNNXDh1aJ1rjYizshcsxg&s" alt="Offer 8">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwCUNm5G97swbZH5JeKTec7grc4jyEGT4VBg&s" alt="Offer 9">
+                        <img src="https://www.shutterstock.com/image-vector/last-minute-offer-watch-countdown-260nw-2647786293.jpg" alt="Offer 10">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHh3-fM74b8r7x6NOZYXG6dkTmEGyNWww_9g&s" alt="Offer 11">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsmsBfrOdgaXTfgvXBTWSh_3zTnzX-9mP51A&s" alt="Offer 11">
+                    </div>
+                </div>
+            `;
+        }
+
+        function choosePerson(mode, person) {
+            if (person) {
+                setBackground(person.toLowerCase());
+                let categories = ["Formal Office Wear", "Traditional Dresses", "Footwear", "Accessories"];
+                if (person === "Kids") {
+                    categories = ["Traditional Dresses", "Footwear", "Accessories", "Night Dresses"];
+                }
+                document.getElementById("main-content").innerHTML = `
+                    <h2>Choose Category for ${person} (${mode})</h2>
+                    ${categories.map(cat => `
+                        <button class="btn btn-primary" onclick="showProducts('${mode}','${person}','${cat}')">${cat}</button>
+                    `).join("")}
+                    <br><br>
+                    <button class="btn btn-secondary" onclick="choosePerson('${mode}')">Back</button>
+                `;
+            } else {
+                document.getElementById("main-content").innerHTML = `
+                    <h2>Choose Person (${mode})</h2>
+                    <button class="btn btn-primary" onclick="choosePerson('${mode}','Men')">Men</button>
+                    <button class="btn btn-primary" onclick="choosePerson('${mode}','Women')">Women</button>
+                    <button class="btn btn-primary" onclick="choosePerson('${mode}','Kids')">Kids</button>
+                `;
+            }
+        }
+
+        function showProducts(mode, person, category) {
+            // Set background based on person and category
+            const bgKey = `${person.toLowerCase()}_${category.toLowerCase().replace(' ', '_')}`;
+            setBackground(bgKey);
+            
+            const categoryProducts = products[person][category];
+            
+            if (!categoryProducts) {
+                document.getElementById("main-content").innerHTML = `
+                    <h2>No products available for ${category} (${person})</h2>
+                    <button class="btn btn-secondary" onclick="choosePerson('${mode}', '${person}')">Back</button>
+                `;
+                return;
+            }
+            
+            document.getElementById("main-content").innerHTML = `
+                <h2>${category} for ${person} (${mode})</h2>
+                <div class="products">
+                    ${categoryProducts.map(product => {
+                        // Determine which button to show based on mode
+                        let actionButton = '';
+                        if (mode === 'buy') {
+                            actionButton = `<button class="btn btn-buy" onclick="addToCart(${product.id}, 'buy')">Add to Cart (Buy)</button>`;
+                        } else if (mode === 'rent') {
+                            actionButton = `<button class="btn btn-rent" onclick="addToCart(${product.id}, 'rent')">Add to Cart (Rent)</button>`;
+                        }
+                        
+                        return `
+                            <div class="product-card">
+                                <img src="${product.image}" alt="${product.name}">
+                                <h3>${product.name}</h3>
+                                <div class="price">
+                                    ${mode === 'buy' ? `Buy: $${product.price}` : `Rent: $${product.rentPrice}`}
+                                </div>
+                                <div class="action-buttons">
+                                    ${actionButton}
+                                    <button class="btn btn-like" onclick="addToLikes(${product.id})">❤️ Like</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join("")}
+                </div>
+                <br>
+                <button class="btn btn-secondary" onclick="choosePerson('${mode}', '${person}')">Back to Categories</button>
+            `;
+        }
+
+        function addToCart(productId, mode) {
+            // Find the product in our database
+            let product = null;
+            for (const person in products) {
+                for (const category in products[person]) {
+                    const found = products[person][category].find(p => p.id === productId);
+                    if (found) {
+                        product = found;
+                        break;
+                    }
+                }
+                if (product) break;
+            }
+            
+            if (product) {
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.id === productId && item.mode === mode);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        ...product,
+                        mode: mode,
+                        quantity: 1
+                    });
+                }
+                
+                // Store last action for undo
+                lastAction = {
+                    type: 'cart',
+                    productId: productId,
+                    mode: mode,
+                    product: product
+                };
+                
+                updateCartDisplay();
+                updateNavCounts();
+                showToast(`${product.name} added to cart!`, "Undo", undoLastAction);
+            }
+        }
+
+        function addToLikes(productId) {
+            // Find the product in our database
+            let product = null;
+            for (const person in products) {
+                for (const category in products[person]) {
+                    const found = products[person][category].find(p => p.id === productId);
+                    if (found) {
+                        product = found;
+                        break;
+                    }
+                }
+                if (product) break;
+            }
+            
+            if (product) {
+                // Check if product already in likes
+                const existingItem = likes.find(item => item.id === productId);
+                
+                if (!existingItem) {
+                    likes.push(product);
+                    
+                    // Store last action for undo
+                    lastAction = {
+                        type: 'like',
+                        productId: productId,
+                        product: product
+                    };
+                    
+                    updateLikesDisplay();
+                    updateNavCounts();
+                    showToast(`${product.name} added to likes!`, "Undo", undoLastAction);
+                } else {
+                    showToast(`${product.name} is already in your likes!`);
+                }
+            }
+        }
+
+        function undoLastAction() {
+            if (!lastAction) return;
+            
+            if (lastAction.type === 'cart') {
+                // Remove from cart
+                const index = cart.findIndex(item => 
+                    item.id === lastAction.productId && item.mode === lastAction.mode
+                );
+                
+                if (index !== -1) {
+                    const item = cart[index];
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        cart.splice(index, 1);
+                    }
+                    
+                    updateCartDisplay();
+                    updateNavCounts();
+                    showToast(`${lastAction.product.name} removed from cart!`);
+                }
+            } else if (lastAction.type === 'like') {
+                // Remove from likes
+                const index = likes.findIndex(item => item.id === lastAction.productId);
+                
+                if (index !== -1) {
+                    likes.splice(index, 1);
+                    updateLikesDisplay();
+                    updateNavCounts();
+                    showToast(`${lastAction.product.name} removed from likes!`);
+                }
+            }
+            
+            lastAction = null;
+        }
+
+        function removeFromCart(productId, mode) {
+            const index = cart.findIndex(item => item.id === productId && item.mode === mode);
+            
+            if (index !== -1) {
+                const product = cart[index];
+                cart.splice(index, 1);
+                updateCartDisplay();
+                updateNavCounts();
+                
+                // Store last action for undo
+                lastAction = {
+                    type: 'cart-remove',
+                    productId: productId,
+                    mode: mode,
+                    product: product
+                };
+                
+                showToast(`${product.name} removed from cart!`, "Undo", undoRemoveFromCart);
+            }
+        }
+
+        function removeFromLikes(productId) {
+            const index = likes.findIndex(item => item.id === productId);
+            
+            if (index !== -1) {
+                const product = likes[index];
+                likes.splice(index, 1);
+                updateLikesDisplay();
+                updateNavCounts();
+                
+                // Store last action for undo
+                lastAction = {
+                    type: 'like-remove',
+                    productId: productId,
+                    product: product
+                };
+                
+                showToast(`${product.name} removed from likes!`, "Undo", undoRemoveFromLikes);
+            }
+        }
+
+        function undoRemoveFromCart() {
+            if (lastAction && lastAction.type === 'cart-remove') {
+                cart.push({
+                    ...lastAction.product,
+                    mode: lastAction.mode,
+                    quantity: 1
+                });
+                
+                updateCartDisplay();
+                updateNavCounts();
+                showToast(`${lastAction.product.name} added back to cart!`);
+                lastAction = null;
+            }
+        }
+
+        function undoRemoveFromLikes() {
+            if (lastAction && lastAction.type === 'like-remove') {
+                likes.push(lastAction.product);
+                updateLikesDisplay();
+                updateNavCounts();
+                showToast(`${lastAction.product.name} added back to likes!`);
+                lastAction = null;
+            }
+        }
+
+        function updateCartDisplay() {
+            const cartDiv = document.getElementById("cart");
+            let total = 0;
+            
+            if (cart.length === 0) {
+                cartDiv.innerHTML = `
+                    <h2>Your Cart</h2>
+                    <div class="empty-message">Your cart is empty</div>
+                `;
+                return;
+            }
+            
+            cartDiv.innerHTML = `
+                <h2>Your Cart</h2>
+                ${cart.map(item => {
+                    const price = item.mode === 'buy' ? item.price : item.rentPrice;
+                    total += price * item.quantity;
+                    return `
+                        <div class="cart-item">
+                            <img src="${item.image}" alt="${item.name}">
+                            <div class="cart-item-details">
+                                <div><strong>${item.name}</strong></div>
+                                <div>${item.mode === 'buy' ? 'Buy' : 'Rent'}: $${price} x ${item.quantity}</div>
+                                <button class="btn btn-undo" onclick="removeFromCart(${item.id}, '${item.mode}')">Remove</button>
+                            </div>
+                        </div>
+                    `;
+                }).join("")}
+                <div class="cart-total">Total: $${total.toFixed(2)}</div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px;">Checkout</button>
+            `;
+        }
+
+        function updateLikesDisplay() {
+            const likesDiv = document.getElementById("likes");
+            
+            if (likes.length === 0) {
+                likesDiv.innerHTML = `
+                    <h2>Your Likes</h2>
+                    <div class="empty-message">You haven't liked any items yet</div>
+                `;
+                return;
+            }
+            
+            likesDiv.innerHTML = `
+                <h2>Your Likes</h2>
+                ${likes.map(item => `
+                    <div class="like-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="like-item-details">
+                            <div><strong>${item.name}</strong></div>
+                            <div>Buy: $${item.price} | Rent: $${item.rentPrice}</div>
+                            <button class="btn btn-undo" onclick="removeFromLikes(${item.id})">Remove</button>
+                        </div>
+                    </div>
+                `).join("")}
+            `;
+        }
+
+        function toggleCart() {
+            const cartDiv = document.getElementById("cart");
+            const isVisible = cartDiv.style.display === "block";
+            
+            cartDiv.style.display = isVisible ? "none" : "block";
+            
+            // Hide likes when showing cart
+            if (!isVisible) {
+                document.getElementById("likes").style.display = "none";
+            }
+        }
+
+        function toggleLikes() {
+            const likesDiv = document.getElementById("likes");
+            const isVisible = likesDiv.style.display === "block";
+            
+            likesDiv.style.display = isVisible ? "none" : "block";
+            
+            // Hide cart when showing likes
+            if (!isVisible) {
+                document.getElementById("cart").style.display = "none";
+            }
+        }
+
+        function showLogin() {
+            document.getElementById("main-content").innerHTML = "";
+            document.getElementById("loginPage").style.display = "block";
+        }
+
+        function hideLogin() {
+            document.getElementById("loginPage").style.display = "none";
+            showHome();
+        }
+
+        // Initialize the page
+        showHome();
+        updateNavCounts();
+    </script>
+</body>
+</html>
